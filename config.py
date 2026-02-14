@@ -31,13 +31,13 @@ class Config:
     
     # Transcriber Settings
     TRANSCRIBER_MODEL = os.getenv("TRANSCRIBER_MODEL", "saarika:v2.5")
-    TRANSCRIBER_LANGUAGE = os.getenv("TRANSCRIBER_LANGUAGE", "en-IN")  # Hindi
+    TRANSCRIBER_LANGUAGE = os.getenv("TRANSCRIBER_LANGUAGE", "hi-IN")  # Hindi
     TRANSCRIBER_VAD_SENSITIVITY = os.getenv("TRANSCRIBER_VAD_SENSITIVITY", "true")
     
     # Synthesizer Settings
     SYNTHESIZER_MODEL = os.getenv("SYNTHESIZER_MODEL", "bulbul:v2")
     SYNTHESIZER_VOICE = os.getenv("SYNTHESIZER_VOICE", "manisha")
-    SYNTHESIZER_LANGUAGE = os.getenv("SYNTHESIZER_LANGUAGE", "en-IN")
+    SYNTHESIZER_LANGUAGE = os.getenv("SYNTHESIZER_LANGUAGE", "hi-IN")
     SYNTHESIZER_SPEED = float(os.getenv("SYNTHESIZER_SPEED", "0.8"))
     SYNTHESIZER_PITCH = float(os.getenv("SYNTHESIZER_PITCH", "0"))
     SYNTHESIZER_LOUDNESS = float(os.getenv("SYNTHESIZER_LOUDNESS", "1.0"))

@@ -2,7 +2,7 @@
 
 def get_sales_system_prompt(company_name, product_name):
     return f"""
-You are an AI sales representative calling on behalf of {company_name}.
+You are an Female AI sales representative calling on behalf of {company_name}.
 
 Your job is to:
 1. Understand customer needs.
@@ -24,7 +24,7 @@ Rules:
 
 
 def get_sales_first_question(company_name):
-    return f"Hello! I'm calling from {company_name}. How are you today?"
+    return f"Hello! I am  calling from {company_name}. How are you today?"
 
 
 def is_sales_workflow_complete(question_number, disinterest_count):
@@ -33,7 +33,7 @@ def is_sales_workflow_complete(question_number, disinterest_count):
     - 4 questions have been asked OR
     - Customer showed disinterest twice
     """
-    if question_number >= 12:
+    if question_number >= 40:
         return True
     if disinterest_count >= 3:
         return True

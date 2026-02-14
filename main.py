@@ -15,6 +15,10 @@ from voice_agent import VoiceAgent
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 
+import socketio
+
+# Setup Async Socket.io Server
+
 
 
 # Configure logging
@@ -48,6 +52,11 @@ class CallRequest(BaseModel):
     phone: str
     workflow_type: str
     workflow_data: dict = {}
+    
+class WorkflowUpdate(BaseModel):
+    chat_id: str
+    event: str = "function_status"
+    data: dict
 # Initialize FastAPI
 app = FastAPI(
     title="Sarvam Voice Agent API",
@@ -55,6 +64,8 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+
 
 # Add CORS middleware
 app.add_middleware(
@@ -64,6 +75,29 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 3️⃣ Create Socket.IO server
+sio = socketio.AsyncServer(
+    async_mode="asgi",
+    cors_allowed_origins="*"
+)
+
+# 4️⃣ Wrap FastAPI app
+socket_app = socketio.ASGIApp(sio, app)
+
+@sio.on("join_chat_room")
+async def handle_join(sid, chat_id):
+    await sio.enter_room(sid, chat_id)
+    print(f"User {sid} joined room: {chat_id}")
+    
+@app.post("/api/workflow-update")
+async def workflow_update(payload: WorkflowUpdate):
+    await sio.emit(
+        payload.event,
+        payload.data,
+        room=payload.chat_id
+    )
+    return {"status": "success", "message": "Notification broadcasted"}
 
 @app.get("/")
 async def root():
